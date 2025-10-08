@@ -64,6 +64,7 @@ document.addEventListener("DOMContentLoaded", () => {
         <a href="#rekrut">Rekrut</a>
         <a href="#contact">Kontak</a>
         <a href="gold.html">Gold</a>
+        <a href="gold.html">Gold</a>
       </nav>
     </header>
 
