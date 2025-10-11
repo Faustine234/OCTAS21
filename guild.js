@@ -1,60 +1,56 @@
 document.addEventListener("DOMContentLoaded", () => {
-  document.body.innerHTML = `
-  <style>
-    :root{
-      --bg:#0f1724;
-      --card:#0b1220;
-      --accent:#7c3aed;
-      --muted:#94a3b8;
-      --glass: rgba(255,255,255,0.03);
-    }
-    *{box-sizing:border-box}
-    html,body{height:100%}
-    body{
-      margin:0;padding:0;font-family:Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial;
-      background: radial-gradient(1200px 600px at 10% 10%, rgba(124,58,237,0.08), transparent),
-                  linear-gradient(180deg, #020617 0%, #071022 100%);
-      color:#e6eef8; -webkit-font-smoothing:antialiased;
-    }
-    .container{max-width:1100px;margin:32px auto;padding:24px}
-    header{display:flex;align-items:center;justify-content:space-between;gap:16px}
-    .brand{display:flex;gap:12px;align-items:center}
-    .logo{width:56px;height:56px;border-radius:12px;background:linear-gradient(135deg,var(--accent),#ec4899);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:18px;box-shadow:0 6px 18px rgba(124,58,237,0.15)}
-    nav{display:flex;gap:12px;align-items:center}
-    nav a{color:var(--muted);text-decoration:none;padding:8px 12px;border-radius:8px}
-    nav a:hover{color:white;background:var(--glass)}
-    .hero{display:grid;grid-template-columns:1fr 380px;gap:20px;margin-top:22px}
-    .card{background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));padding:20px;border-radius:14px;box-shadow:0 6px 30px rgba(2,6,23,0.6);border:1px solid rgba(255,255,255,0.03)}
-    .hero-left h1{margin:0;font-size:34px;letter-spacing:-0.02em}
-    .meta{color:var(--muted);margin-top:8px}
-    .cta{margin-top:18px;display:flex;gap:12px}
-    .btn{padding:10px 14px;border-radius:10px;border:0;cursor:pointer;font-weight:600}
-    .btn-primary{background:linear-gradient(90deg,var(--accent),#ec4899);color:white}
-    .btn-ghost{background:transparent;color:var(--muted);border:1px solid rgba(255,255,255,0.04)}
-    .roster{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:18px}
-    .member{display:flex;gap:12px;align-items:center;padding:10px;border-radius:10px;background:linear-gradient(180deg, rgba(255,255,255,0.01), transparent)}
-    .avatar{width:52px;height:52px;border-radius:10px;background:linear-gradient(135deg,#1f2937,#374151);display:flex;align-items:center;justify-content:center;font-weight:700}
-    .member h4{margin:0;font-size:15px}
-    .member p{margin:0;color:var(--muted);font-size:13px}
-    aside .stat{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px}
-    .small{font-size:13px;color:var(--muted)}
-    section{margin-top:24px}
-    .events{display:flex;flex-direction:column;gap:12px}
-    .event{display:flex;gap:12px;padding:12px;border-radius:10px;background:linear-gradient(180deg, rgba(255,255,255,0.01), transparent)}
-    .date{min-width:84px;text-align:center;padding:10px;border-radius:8px;background:rgba(255,255,255,0.02)}
-    .event h3{margin:0}
-    footer{margin-top:32px;padding:18px;border-radius:12px;text-align:center;color:var(--muted)}
-    @media (max-width:900px){.hero{grid-template-columns:1fr;}.roster{grid-template-columns:repeat(2,1fr)}}
-    @media (max-width:560px){nav{display:none}.roster{grid-template-columns:1fr}}
-  </style>
+  // === PILIH FOTO BACKGROUND ===
+  const backgrounds = [
+    "url('https://images.unsplash.com/photo-1503264116251-35a269479413?auto=format&fit=crop&w=1950&q=80')",
+    "url('https://images.unsplash.com/photo-1508675801627-066ac4346a0b?auto=format&fit=crop&w=1950&q=80')",
+    "url('https://images.unsplash.com/photo-1606112219348-204d7d8b94ee?auto=format&fit=crop&w=1950&q=80')",
+    "url('https://images.unsplash.com/photo-1526401281623-3594f56a2d1d?auto=format&fit=crop&w=1950&q=80')"
+  ];
 
+  let current = 0;
+
+  // === STYLE DASAR BODY ===
+  document.body.style.cssText = `
+    margin: 0;
+    padding: 0;
+    font-family: Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+    color: #e6eef8;
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    background-image: ${backgrounds[current]};
+    transition: background-image 1.5s ease-in-out;
+  `;
+
+  // === GANTI BACKGROUND OTOMATIS TIAP 10 DETIK ===
+  setInterval(() => {
+    current = (current + 1) % backgrounds.length;
+    document.body.style.backgroundImage = backgrounds[current];
+  }, 10000);
+
+  // === TOMBOL MANUAL GANTI BACKGROUND ===
+  const switchBtn = document.createElement("button");
+  switchBtn.textContent = "🔄 Ganti Background";
+  switchBtn.className = "btn btn-ghost";
+  switchBtn.style.position = "fixed";
+  switchBtn.style.bottom = "20px";
+  switchBtn.style.right = "20px";
+  switchBtn.style.zIndex = "9999";
+  switchBtn.onclick = () => {
+    current = (current + 1) % backgrounds.length;
+    document.body.style.backgroundImage = backgrounds[current];
+  };
+  document.body.appendChild(switchBtn);
+
+  // === HTML ASLI GUILD KAMU ===
+  document.body.innerHTML += `
   <div class="container">
     <header>
       <div class="brand">
         <div class="logo">OFW</div>
         <div>
           <div style="font-weight:700">Octa Fate War</div>
-          <div style="font-size:13px;color:var(--muted)">Guild • PvP • Raids • Community</div>
+          <div style="font-size:13px;color:#94a3b8">Guild • PvP • Raids • Community</div>
         </div>
       </div>
       <nav>
@@ -64,101 +60,22 @@ document.addEventListener("DOMContentLoaded", () => {
         <a href="#rekrut">Rekrut</a>
         <a href="#contact">Kontak</a>
         <a href="gold.html">Gold</a>
-        <a href="gold.html">Gold</a>
       </nav>
     </header>
 
-    <div class="hero">
-      <div class="card hero-left">
-        <h1>Selamat datang di <span style="color:var(--accent)">Octa Fate War</span></h1>
-        <div class="meta">Guild kompetitif dan ramah — fokus PvP, Raid mingguan, dan turnamen komunitas.</div>
-        <div class="cta">
-          <button class="btn btn-primary" id="joinBtn">Gabung Sekarang</button>
-          <button class="btn btn-ghost" id="eventBtn">Lihat Event</button>
-        </div>
-        <div id="about" style="margin-top:18px">
-          <h3>Visi</h3>
-          <p class="small">Menjadi guild top di server dengan menjaga sportivitas, pembinaan pemain baru, dan keaktifan komunitas.</p>
-          <h3 style="margin-top:12px">Aturan Singkat</h3>
-          <ul style="color:var(--muted);margin-top:6px">
-            <li>Aktif setidaknya 3x seminggu</li>
-            <li>Ikut raid mingguan kecuali izin</li>
-            <li>Sopan dan bantu sesama anggota</li>
-          </ul>
-        </div>
-        <div style="margin-top:14px">
-          <h3>Channel Komunikasi</h3>
-          <p class="small">Discord • Telegram • In-game chat</p>
-        </div>
-      </div>
-
-      <aside class="card">
-        <div class="stat"><div class="small">Member</div><div style="font-weight:700">48</div></div>
-        <div class="stat"><div class="small">Level Guild</div><div style="font-weight:700">21</div></div>
-        <div class="stat"><div class="small">Next Raid</div><div style="font-weight:700">Sab, 18 Okt 2025 • 20:00</div></div>
-        <div style="margin-top:12px">
-          <h4 style="margin:0">Berita Terbaru</h4>
-          <p class="small" style="margin-top:8px">Turnamen inter-guild selesai — OFW masuk 3 besar! Terima kasih semua.</p>
-        </div>
-      </aside>
-    </div>
-
-    <section id="roster">
-      <h2>Roster Utama</h2>
-      <div class="roster">
-        ${["Arthas — Tank","Lina — Healer","Raze — DPS","Sora — DPS","Nika — Flex","Kyo — Scout"]
-          .map((n,i)=>`<div class="member card"><div class="avatar">${n[0]}</div><div><h4>${n}</h4><p class="small">Anggota aktif guild</p></div></div>`).join("")}
-      </div>
-    </section>
-
-    <section id="events">
-      <h2>Event Mendatang</h2>
-      <div class="events">
-        <div class="event card"><div class="date">18 Okt<br><strong>20:00</strong></div>
-          <div><h3>Raid Mingguan — Castle of Doom</h3><p class="small">Persiapkan gear + potions. Kumpul di Discord 30 menit sebelum raid.</p></div></div>
-        <div class="event card"><div class="date">25 Okt<br><strong>19:00</strong></div>
-          <div><h3>Scrim PvP vs Guild Aster</h3><p class="small">Latihan strategi PvP dan kombo tim.</p></div></div>
-      </div>
-    </section>
-
-    <section id="rekrut">
-      <h2>Rekrutmen</h2>
+    <section class="hero">
       <div class="card">
-        <p class="small">Kami membuka rekrutmen untuk posisi DPS dan Healer. Syarat singkat:</p>
-        <ul style="color:var(--muted)">
-          <li>Minimal level 60</li>
-          <li>Aktif mingguan</li>
-          <li>Punya Discord</li>
-        </ul>
-        <p class="small">Cara daftar: kirim pesan ke Leader (In-game) atau isi form di Discord.</p>
+        <h1>Selamat datang di <span style="color:#7c3aed">Octa Fate War</span></h1>
+        <p>Guild kompetitif dan ramah — fokus PvP, Raid mingguan, dan turnamen komunitas.</p>
       </div>
     </section>
-
-    <section id="contact">
-      <h2>Kontak</h2>
-      <div class="card" style="display:flex;gap:12px;flex-direction:column">
-        <p class="small">Leader: <strong>Arthas#1234</strong></p>
-        <p class="small">Discord: <strong>discord.gg/example</strong></p>
-        <p class="small">IG: <strong>@octafatewar</strong></p>
-      </div>
-    </section>
-
-    <footer>© Octa Fate War • Dibuat dengan ❤️ • GitHub Pages Edition</footer>
   </div>
   `;
 
-  // Smooth scroll
-  document.getElementById("joinBtn").onclick = () => {
-    document.getElementById("rekrut").scrollIntoView({ behavior: "smooth" });
-  };
-  document.getElementById("eventBtn").onclick = () => {
-    document.getElementById("events").scrollIntoView({ behavior: "smooth" });
-  };
-
-  // Avatar animation
-  document.querySelectorAll('.avatar').forEach((el,i)=>{
+  // Animasi kecil untuk logo/avatar
+  document.querySelectorAll('.avatar').forEach((el, i) => {
     el.style.transform = 'translateY(-4px)';
     el.style.transition = 'transform 600ms cubic-bezier(.2,.9,.3,1)';
-    setTimeout(()=> el.style.transform = 'translateY(0)', 100 + i*80);
+    setTimeout(() => el.style.transform = 'translateY(0)', 100 + i * 80);
   });
 });
